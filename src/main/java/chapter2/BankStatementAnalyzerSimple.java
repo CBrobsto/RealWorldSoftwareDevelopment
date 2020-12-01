@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 /**
+ * Example 2.1
  * Answers the query: What is the total profit and loss from a list of bank statements? Is it
  * positive or negative?
  */
@@ -25,4 +26,12 @@ public class BankStatementAnalyzerSimple {
 
         System.out.println("The total for all transactions is " + total);
     }
+
+    /*
+    * This approach starts with the KISS principle.
+    * Considerations:
+    * What if the file is empty?
+    * What if parsing the amount fails because the data was corrupted?
+    * What if a statement line has missing data?
+    */
 }
