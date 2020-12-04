@@ -12,6 +12,14 @@ public class BankStatementProcessor {
         this.bankTransactions = bankTransactions;
     }
 
+    public double summarizeTransactions(final BankTransactionSummarizer bankTransactionSummarizer) {
+        double result = 0;
+        for (final BankTransaction bankTransaction: bankTransactions) {
+            result = bankTransactionSummarizer.summarize(result, bankTransaction);
+        }
+        return result;
+    }
+
     public double calculateTotalAmount() {
         double total = 0;
         for (final BankTransaction bankTransaction: bankTransactions) {
@@ -21,13 +29,9 @@ public class BankStatementProcessor {
     }
 
     public double calculateTotalInMonth(final Month month) {
-        double total = 0;
-        for (final BankTransaction bankTransaction: bankTransactions) {
-            if (bankTransaction.getDate().getMonth() == month) {
-                total += bankTransaction.getAmount();
-            }
-        }
-        return total;
+        return summarizeTransactions((acc, bankTransaction) ->
+                bankTransaction.getDate().getMonth() ==
+                        month ? acc + bankTransaction.getAmount() : acc);
     }
 
     public double calculateTotalForCategory(final String category) {
@@ -48,10 +52,12 @@ public class BankStatementProcessor {
                 result.add(bankTransaction);
             }
         }
-        return result;
+        return bankTransactions;
     }
 
-
+    public List<BankTransaction> findTransactionsGreaterThanEqual(final int amount) {
+        return findTransactions(bankTransaction -> bankTransaction.getAmount() >= amount);
+    }
 
     /* The following code is a natural first approach but has the following downsides:
     *       * Code becomes increasingly complicate as you have to combine multiple properties
@@ -59,7 +65,7 @@ public class BankStatementProcessor {
     *       * The selection logic is coupled to the iteration logic, making it harder to
     *           separate them out.
     *       * Keeps duplicated code. */
-    /*public List<BankTransaction> findTransactionsGreaterThanEqual(final int amount) {
+/*  public List<BankTransaction> findTransactionsGreaterThanEqual(final int amount) {
         final List<BankTransaction> result = new ArrayList<>();
         for (final BankTransaction bankTransaction: bankTransactions) {
             if (bankTransaction.getAmount() >= amount) {
@@ -87,6 +93,7 @@ public class BankStatementProcessor {
             }
         }
         return result;
-    }*/
+    }
+*/
 
 }

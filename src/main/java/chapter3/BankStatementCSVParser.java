@@ -2,8 +2,9 @@ package main.java.chapter3;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 // High Cohesion (Functional)
 public class BankStatementCSVParser implements BankStatementParser {
@@ -19,10 +20,6 @@ public class BankStatementCSVParser implements BankStatementParser {
     }
 
     public List<BankTransaction> parseLinesFrom(final List<String> lines) {
-        final List<BankTransaction> bankTransactions = new ArrayList<>();
-        for (final String line: lines) {
-            bankTransactions.add(parseFrom(line));
-        }
-        return bankTransactions;
+        return lines.stream().map(this::parseFrom).collect(toList());
     }
 }
