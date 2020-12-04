@@ -16,3 +16,11 @@ public class BankTransactionIsInFebruaryAndExpensive implements BankTransactionF
  * final List<BankTransaction> transactions =
  *      bankStatementProcessor.findTransactions(new BankTransactionIsInFebruaryAndExpensive());
  */
+
+/* Example using a lambda expression instead of a new class for each filter.
+ *
+ * final List<BankTransaction> transactions =
+ *      bankStatementProcessor.findTransactions(bankTransaction ->
+ *          bankTransaction.getDate().getMonth() == Month.FEBRUARY
+ *          && bankTransaction.getAmount() >= 1_000);
+ */
