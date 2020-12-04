@@ -12,8 +12,10 @@ public class MainApplication {
 
         final BankStatementParser bankStatementParser = new BankStatementCSVParser();
 
+        final Exporter exporter = new HtmlExporter();
+
         // Replace 'FILENAME' with 'args[0]' to enter the fileName at runtime
-        bankStatementAnalyzer.analyze(FILENAME, bankStatementParser);
+        bankStatementAnalyzer.analyze(FILENAME, bankStatementParser, exporter);
     }
 
 }
