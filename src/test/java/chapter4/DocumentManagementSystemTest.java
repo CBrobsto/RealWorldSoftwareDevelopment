@@ -15,6 +15,7 @@ public class DocumentManagementSystemTest {
     private static final String RESOURCES = "src" + File.separator + "test" + File.separator
             + "resources" + File.separator;
     private static final String LETTER = RESOURCES + "patient.letter";
+    private static final String INVOICE = RESOURCES + "patient.invoice";
     private static final String JOE_BLOGGS = "Joe Bloggs";
 
     private DocumentManagementSystem system = new DocumentManagementSystem();
@@ -58,7 +59,13 @@ public class DocumentManagementSystemTest {
 
     @Test
     public void shouldImportInvoiceAttributes() throws Exception {
-        Assertions.fail("Invoice extension type is not yet implemented.");
+        system.importFile(INVOICE);
+
+        final Document document = onlyDocument();
+
+        assertAttributeEquals(document, PATIENT, JOE_BLOGGS);
+        assertAttributeEquals(document, AMOUNT, "$100");
+        assertTypeIs("INVOICE", document);
     }
 
     @Test
