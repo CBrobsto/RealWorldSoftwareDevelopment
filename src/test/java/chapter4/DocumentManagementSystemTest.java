@@ -16,6 +16,7 @@ public class DocumentManagementSystemTest {
             + "resources" + File.separator;
     private static final String LETTER = RESOURCES + "patient.letter";
     private static final String INVOICE = RESOURCES + "patient.invoice";
+    private static final String REPORT = RESOURCES + "patient.report";
     private static final String JOE_BLOGGS = "Joe Bloggs";
 
     private DocumentManagementSystem system = new DocumentManagementSystem();
@@ -49,7 +50,9 @@ public class DocumentManagementSystemTest {
 
     @Test
     public void shouldImportReportAttributes() throws Exception {
-        Assertions.fail("Report extension type is not yet implemented.");
+        system.importFile(REPORT);
+
+        assertIsReport(onlyDocument());
     }
 
     @Test
