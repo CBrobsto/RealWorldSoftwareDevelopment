@@ -19,6 +19,7 @@ public class DocumentManagementSystem {
     public DocumentManagementSystem() {
         extensionToImporter.put("letter", new LetterImporter());
         extensionToImporter.put("invoice", new InvoiceImporter());
+        extensionToImporter.put("report", new ReportImporter());
     }
 
     public void importFile(final String path) throws IOException {
