@@ -20,6 +20,7 @@ public class DocumentManagementSystem {
         extensionToImporter.put("letter", new LetterImporter());
         extensionToImporter.put("invoice", new InvoiceImporter());
         extensionToImporter.put("report", new ReportImporter());
+        extensionToImporter.put("jpg", new ImageImporter());
     }
 
     public void importFile(final String path) throws IOException {
