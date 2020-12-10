@@ -16,6 +16,8 @@ public class DocumentManagementSystemTest {
             + "resources" + File.separator;
     private static final String LETTER = RESOURCES + "patient.letter";
     private static final String INVOICE = RESOURCES + "patient.invoice";
+    private static final String REPORT = RESOURCES + "patient.report";
+    private static final String XRAY = RESOURCES + "xray.jpg";
     private static final String JOE_BLOGGS = "Joe Bloggs";
 
     private DocumentManagementSystem system = new DocumentManagementSystem();
@@ -49,12 +51,20 @@ public class DocumentManagementSystemTest {
 
     @Test
     public void shouldImportReportAttributes() throws Exception {
-        Assertions.fail("Report extension type is not yet implemented.");
+        system.importFile(REPORT);
+
+        assertIsReport(onlyDocument());
     }
 
     @Test
     public void shouldImportImageAttributes() throws Exception {
-        Assertions.fail("Image extension type is not yet implemented.");
+        system.importFile(XRAY);
+
+        final Document document = onlyDocument();
+
+        assertAttributeEquals(document, WIDTH, "320");
+        assertAttributeEquals(document, HEIGHT, "179");
+        assertTypeIs("IMAGE", document);
     }
 
     @Test
@@ -71,13 +81,13 @@ public class DocumentManagementSystemTest {
     @Test
     public void shouldBeAbleToSearchFilesByAttributes() throws Exception {
         system.importFile(LETTER);
-        //system.importFile(REPORT);
-        //system.importFile(XRAY);
+        system.importFile(REPORT);
+        system.importFile(XRAY);
 
-        final List<Document> documents = system.search("patient:Joe,body:29th December 2016");
+        final List<Document> documents = system.search("patient:Joe,body:Diet Coke");
         Assertions.assertEquals(1, documents.size());
 
-        //assertIsReport(documents.get(0));
+        assertIsReport(documents.get(0));
     }
 
     private void assertAttributeEquals(
