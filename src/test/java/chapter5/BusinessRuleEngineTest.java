@@ -25,7 +25,6 @@ public class BusinessRuleEngineTest {
         Assertions.assertEquals(2, businessRuleEngine.count());
     }
 
-    /* Uncomment after creating a gradle or maven build file to handle external libraries */
     @Test
     void shouldExecuteOneAction() {
         final BusinessRuleEngine businessRuleEngine = new BusinessRuleEngine();
@@ -35,5 +34,15 @@ public class BusinessRuleEngineTest {
         businessRuleEngine.run();
 
         Mockito.verify(mockAction).execute();
+    }
+
+    @Test
+    public void shouldPerformAnActionWithFacts() {
+        final Action mockAction = Mockito.mock(Action.class);
+        final Facts mockFacts = Mockito.mock(Facts.class);
+        final BusinessRuleEngine businessRuleEngine = new BusinessRuleEngine(mockFacts);
+        businessRuleEngine.addAction(mockAction);
+        businessRuleEngine.run();
+        Mockito.verify(mockAction).perform(mockFacts);
     }
 }
